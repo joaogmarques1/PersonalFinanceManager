@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 //Importar imagens
 import logo from "../assets/images/logo.png";
-import bgImage from "../assets/images/Navbar2.png";
+import bgImage from "../assets/images/NavBar2.png";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
