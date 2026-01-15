@@ -1,0 +1,38 @@
+# General
+.DS_Store
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.coverage
+.tox/
+.pytest_cache/
+
+# Node
+node_modules/
+dist/
+build/
+coverage/
+.npm/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Docker
+docker-compose.override.yml
+
+# vscode
+.vscode
+

@@ -1,0 +1,42 @@
+services:
+  backend:
+    build: ./backend
+    working_dir: /app
+    env_file:
+      - ./backend/.env
+    environment:
+      - PYTHONPATH=/app/app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app:ro
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173" # npm run dev
+      - "4173:4173" # npm run preview
+    environment:
+      - VITE_API_URL=http://localhost:8000
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=finance_db
+
+volumes:
+  postgres_data:
+
+
