@@ -3,11 +3,18 @@ from sqlalchemy.sql import func
 from features.transactions import models, schemas
 
 
-def get_transactions(db: Session, user_id: int):
-    return db.query(models.Transaction).filter(
+def get_transactions(db: Session, user_id: int, sort_by: str = "date"):
+    query = db.query(models.Transaction).filter(
         models.Transaction.user_id == user_id,
         models.Transaction.deleted_at.is_(None)
-    ).all()
+    )
+
+    if sort_by == "created_at":
+        query = query.order_by(models.Transaction.created_at.desc())
+    else:
+        query = query.order_by(models.Transaction.date.desc())
+
+    return query.all()
 
 
 def get_transaction(db: Session, transaction_id: int, user_id: int):

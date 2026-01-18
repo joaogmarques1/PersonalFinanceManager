@@ -14,11 +14,12 @@ router = APIRouter()
 
 @router.get("/", response_model=list[schemas.Transaction])
 def list_transactions(
+    sort_by: str = Query("date", enum=["date", "created_at"]),
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
     
-    return service.get_transactions(db, current_user.id)
+    return service.get_transactions(db, current_user.id, sort_by)
 
 @router.get("/{transaction_id}", response_model=schemas.Transaction)
 def get_transaction(
