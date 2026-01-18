@@ -56,7 +56,7 @@ export default function DashboardLayout({ children }) {
 
             <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-            <div className="flex-1 p-4 md:p-8 overflow-y-auto bg-[#f0eee6] w-full pt-16 md:pt-8">
+            <div className="flex-1 p-4 md:p-8 overflow-y-auto bg-[#f0eee6] w-full pt-4 md:pt-8">
                 {children}
             </div>
 

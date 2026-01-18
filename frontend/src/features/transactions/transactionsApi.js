@@ -2,8 +2,8 @@
 import axiosClient from "../../api/axiosClient";
 
 // Obter todas as transações
-export const fetchTransactions = async () => {
-  const response = await axiosClient.get("/transactions/");
+export const fetchTransactions = async (sortBy = "date") => {
+  const response = await axiosClient.get(`/transactions/?sort_by=${sortBy}`);
   return response.data;
 };
 
