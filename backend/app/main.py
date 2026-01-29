@@ -42,3 +42,15 @@ app.include_router(transactions_router, prefix="/transactions", tags=["Transacti
 app.include_router(loans_router, prefix="/loans", tags=["Loans"])
 app.include_router(credit_cards_router, prefix="/credit-cards", tags=["Credit Cards"])
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
+
+from features.business.routes import router as business_router
+app.include_router(business_router, prefix="/business", tags=["Business"])
+
+from features.business.members.routes import router as business_members_router
+app.include_router(business_members_router, prefix="/business/{business_id}/members", tags=["Business Members"])
+
+from features.business.transaction_categories.routes import router as business_categories_router
+app.include_router(business_categories_router, prefix="/business/{business_id}/categories", tags=["Business Categories"])
+
+from features.business.transactions.routes import router as business_transactions_router
+app.include_router(business_transactions_router, prefix="/business/{business_id}/transactions", tags=["Business Transactions"])
