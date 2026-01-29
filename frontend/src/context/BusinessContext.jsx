@@ -1,0 +1,82 @@
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import axiosClient from "../api/axiosClient";
+import { fetchUserBusinesses as fetchUserBusinessesApi } from '../features/business/api';
+
+const BusinessContext = createContext();
+
+export const useBusiness = () => useContext(BusinessContext);
+
+export const BusinessProvider = ({ children }) => {
+    const [environment, setEnvironment] = useState(() => localStorage.getItem('app_environment') || 'personal');
+    const [activeBusiness, setActiveBusiness] = useState(() => {
+        const saved = localStorage.getItem('active_business');
+        return saved ? JSON.parse(saved) : null;
+    });
+    const [userBusinesses, setUserBusinesses] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    // Persist environment
+    useEffect(() => {
+        localStorage.setItem('app_environment', environment);
+    }, [environment]);
+
+    // Persist activeBusiness
+    useEffect(() => {
+        if (activeBusiness) {
+            localStorage.setItem('active_business', JSON.stringify(activeBusiness));
+        } else {
+            localStorage.removeItem('active_business');
+        }
+    }, [activeBusiness]);
+
+    // Switch between Personal and Business modes
+    const switchEnvironment = (env) => {
+        setEnvironment(env);
+        if (env === 'personal') {
+            setActiveBusiness(null);
+        } else if (env === 'business' && userBusinesses.length > 0 && !activeBusiness) {
+            // Auto-select first business if none selected
+            setActiveBusiness(userBusinesses[0]);
+        }
+    };
+
+    // ... (inside BusinessProvider in previous file content, need imports first)
+
+    const fetchUserBusinesses = async () => {
+        setLoading(true);
+        try {
+            const data = await fetchUserBusinessesApi();
+            setUserBusinesses(data);
+
+        } catch (error) {
+            console.error("Failed to fetch businesses", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch businesses when app starts or authentication state changes
+        // verify if user is logged in before fetching
+        const token = localStorage.getItem('token');
+        if (token) {
+            fetchUserBusinesses();
+        }
+    }, []);
+
+    return (
+        <BusinessContext.Provider
+            value={{
+                environment,
+                switchEnvironment,
+                activeBusiness,
+                setActiveBusiness,
+                userBusinesses,
+                fetchUserBusinesses,
+                loading
+            }}
+        >
+            {children}
+        </BusinessContext.Provider>
+    );
+};
