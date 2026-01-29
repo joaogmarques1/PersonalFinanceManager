@@ -76,3 +76,55 @@ CREATE TABLE IF NOT EXISTS public.loans (
     deleted_at TIMESTAMPTZ NULL
 );
 
+
+CREATE TABLE IF NOT EXISTS public.business(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    tax_id VARCHAR(20) NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    UNIQUE (tax_id, country),
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    deleted_at TIMESTAMPTZ NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.business_members(
+    id SERIAL PRIMARY KEY,
+    business_id INTEGER NOT NULL REFERENCES public.business(id) ON DELETE CASCADE,
+    user_id INTEGER NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+    role VARCHAR(50) NOT NULL CHECK (role IN ('owner', 'admin', 'member','viewer', 'invited')),
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    deleted_at TIMESTAMPTZ NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.business_transactions_categories(
+    id SERIAL PRIMARY KEY,
+    business_id INTEGER NOT NULL REFERENCES public.business(id) ON DELETE CASCADE,
+    name VARCHAR(100) NOT NULL,
+    type VARCHAR(10) CHECK (type IN ('income', 'expense')),
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    deleted_at TIMESTAMPTZ NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.business_transactions(
+    id SERIAL PRIMARY KEY,
+    business_id INTEGER NOT NULL REFERENCES public.business(id) ON DELETE CASCADE,
+    user_id INTEGER NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+    counterparty_name VARCHAR(100) NOT NULL,
+    counterparty_tax_id VARCHAR(20) NOT NULL,
+    counterparty_country VARCHAR(100) NOT NULL,
+    category_id INTEGER REFERENCES public.business_transactions_categories(id) ON DELETE SET NULL,
+    description TEXT,
+    type VARCHAR(10) NOT NULL CHECK (type IN ('income', 'expense')),
+    net_amount NUMERIC(10,2) NOT NULL CHECK (net_amount >= 0),
+    vat_rate NUMERIC(5,2) CHECK (vat_rate >= 0),
+    vat_amount NUMERIC(10,2) NOT NULL CHECK (vat_amount >= 0),
+    vat_exemption BOOLEAN NOT NULL,
+    withholding_tax_amount NUMERIC(5,2) CHECK (withholding_tax_amount >= 0),
+    gross_amount NUMERIC(10,2) NOT NULL CHECK (gross_amount >= 0),
+    currency VARCHAR(3) NOT NULL DEFAULT 'EUR',
+    payment_method VARCHAR(50) NOT NULL CHECK (payment_method IN ('Cartão de crédito', 'Cartão de débito','Transferência bancária', 'Dinheiro', 'Outro')),
+    invoice_number VARCHAR(50),
+    date DATE NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    deleted_at TIMESTAMPTZ NULL
+)
