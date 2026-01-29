@@ -52,16 +52,16 @@ export default function Sidebar({ isOpen, onClose }) {
     <>
       <div
         className={`
-          fixed md:relative z-40 inset-y-0 left-0
-          w-64 bg-[#F0EEE6] border-r md:border border-[#e0c9a6] 
-          md:h-[calc(100%-2rem)] h-full flex flex-col 
-          md:rounded-xl md:mt-12 md:ml-8 shadow-sm transition-transform duration-300 ease-in-out
-          ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+          fixed lg:relative z-40 inset-y-0 left-0
+          w-64 bg-[#F0EEE6] border-r lg:border border-[#e0c9a6] 
+          lg:h-[calc(100%-2rem)] h-full flex flex-col 
+          lg:rounded-xl lg:mt-12 lg:ml-8 shadow-sm transition-transform duration-300 ease-in-out
+          ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
       >
         <div className="p-6 border-b border-[#e0c9a6]/50 flex justify-between items-center">
           <h2 className="text-xl font-bold text-[#d9a553]">Personal Finance Manager</h2>
-          <button onClick={onClose} className="md:hidden text-gray-500 hover:text-[#d9a553]">
+          <button onClick={onClose} className="lg:hidden text-gray-500 hover:text-[#d9a553]">
             <X size={24} />
           </button>
         </div>

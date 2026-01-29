@@ -179,15 +179,15 @@ export default function TransactionsPage() {
   if (loading) return <p className="text-center text-gray-500">A carregar...</p>;
 
   return (
-    <div className="p-4 md:p-6">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+    <div className="p-4 lg:p-6">
+      <div className="flex flex-col lg:flex-row justify-between items-center mb-6 gap-4">
         <h1 className="text-2xl font-semibold text-[#d9a553]">💰 Minhas Transações</h1>
 
-        <div className="flex flex-col gap-2 w-full md:w-auto items-end">
+        <div className="flex flex-col gap-2 w-full lg:w-auto items-end">
           <button
             onClick={() => setShowModal(true)}
             disabled={!currentUser?.id}
-            className="bg-[#d9a553] disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg hover:backdrop-blur-lg hover:bg-[#85BB65] transition font-medium shadow-md w-full md:w-auto rounded-full flex-1 md:flex-none justify-center flex items-center gap-2"
+            className="bg-[#d9a553] disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg hover:backdrop-blur-lg hover:bg-[#85BB65] transition font-medium shadow-md w-full lg:w-auto rounded-full flex-1 lg:flex-none justify-center flex items-center gap-2"
           >
             <span style={{ filter: "hue-rotate(180deg) brightness(1.5)" }}>➕</span>
             <span className="whitespace-nowrap">Nova Transação</span>
@@ -197,7 +197,7 @@ export default function TransactionsPage() {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="bg-white border border-[#e0c9a6] text-gray-700 text-sm rounded-lg focus:ring-[#d9a553] focus:border-[#d9a553] block p-1.5 outline-none w-full md:w-auto text-center md:hidden"
+            className="bg-white border border-[#e0c9a6] text-gray-700 text-sm rounded-lg focus:ring-[#d9a553] focus:border-[#d9a553] block p-1.5 outline-none w-full lg:w-auto text-center lg:hidden"
           >
             <option value="date">📅 Data da Transação</option>
             <option value="created_at">🕒 Data de Registo</option>

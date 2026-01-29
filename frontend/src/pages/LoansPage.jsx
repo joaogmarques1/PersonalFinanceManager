@@ -166,12 +166,12 @@ export default function LoansPage() {
   const getCardName = (id) => creditCards.find(c => c.id === id)?.name || "Desconhecido";
 
   return (
-    <div className="p-4 md:p-6">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+    <div className="p-4 lg:p-6">
+      <div className="flex flex-col lg:flex-row justify-between items-center mb-6 gap-4">
         <h1 className="text-2xl font-semibold text-[#d9a553]">🏦 Meus Empréstimos & Dívidas</h1>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="bg-[#d9a553] text-white px-4 py-2 rounded-lg hover:backdrop-blur-lg hover:bg-[#85BB65] transition font-medium shadow-md w-full md:w-auto rounded-full"
+          className="bg-[#d9a553] text-white px-4 py-2 rounded-lg hover:backdrop-blur-lg hover:bg-[#85BB65] transition font-medium shadow-md w-full lg:w-auto rounded-full"
         >
           <span style={{ filter: "hue-rotate(180deg) brightness(1.5)" }}>➕</span> Novo Empréstimo
         </button>
