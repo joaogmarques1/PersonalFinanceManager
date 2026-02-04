@@ -62,7 +62,7 @@ export default function CreditCardRecommendations() {
 
                     <div className="mb-6">
                         <label className="block text-sm font-medium text-gray-700 mb-2">Quanto quer abater?</label>
-                        <div className="flex gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
                             <input
                                 type="number"
                                 value={repaymentAmount}
@@ -73,7 +73,7 @@ export default function CreditCardRecommendations() {
                             <button
                                 onClick={handleRepaymentCalculate}
                                 disabled={repaymentLoading}
-                                className="px-6 py-2 bg-[#d9a553] text-white rounded-lg hover:bg-[#c49245] transition-colors disabled:opacity-50 font-medium"
+                                className="w-full sm:w-auto px-6 py-2 bg-[#d9a553] text-white rounded-lg hover:bg-[#c49245] transition-colors disabled:opacity-50 font-medium"
                             >
                                 {repaymentLoading ? '...' : 'Calcular'}
                             </button>
@@ -119,7 +119,7 @@ export default function CreditCardRecommendations() {
 
                     <div className="mb-6">
                         <label className="block text-sm font-medium text-gray-700 mb-2">Valor da compra?</label>
-                        <div className="flex gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
                             <input
                                 type="number"
                                 value={purchaseAmount}
@@ -130,7 +130,7 @@ export default function CreditCardRecommendations() {
                             <button
                                 onClick={handlePurchaseCalculate}
                                 disabled={purchaseLoading}
-                                className="px-6 py-2 bg-[#d9a553] text-white rounded-lg hover:bg-[#c49245] transition-colors disabled:opacity-50 font-medium"
+                                className="w-full sm:w-auto px-6 py-2 bg-[#d9a553] text-white rounded-lg hover:bg-[#c49245] transition-colors disabled:opacity-50 font-medium"
                             >
                                 {purchaseLoading ? '...' : 'Calcular'}
                             </button>
