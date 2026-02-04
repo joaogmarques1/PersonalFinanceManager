@@ -32,7 +32,7 @@ const financeTheme = themeQuartz.withParams({
 const getStoredUser = () => {
   if (typeof window === "undefined") return null;
   try {
-    const raw = localStorage.getItem("user");
+    const raw = sessionStorage.getItem("user");
     return raw ? JSON.parse(raw) : null;
   } catch (error) {
     console.warn("Falha ao ler o utilizador armazenado:", error);

@@ -33,12 +33,12 @@ export default function App() {
   useEffect(() => {
     if (location.pathname === "/auth") {
       // 🔄 Reset Zone: Clear everything when on the auth page
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      localStorage.removeItem("active_business");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("active_business");
       setUser(null);
     } else {
-      const storedUser = localStorage.getItem("user");
+      const storedUser = sessionStorage.getItem("user");
       if (storedUser) {
         setUser(JSON.parse(storedUser));
       } else {

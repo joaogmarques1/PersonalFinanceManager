@@ -27,10 +27,10 @@ export default function AuthPage() {
         : await register(formData);
 
       //guardar o token de verificação
-      localStorage.setItem("token", res.access_token);
+      sessionStorage.setItem("token", res.access_token);
       // obter user atual
       const user = await getCurrentUser(res.access_token);
-      localStorage.setItem("user", JSON.stringify(user));
+      sessionStorage.setItem("user", JSON.stringify(user));
 
       navigate("/transactions");
     } catch (err) {

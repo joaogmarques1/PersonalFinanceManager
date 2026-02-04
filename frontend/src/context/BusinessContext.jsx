@@ -7,9 +7,9 @@ const BusinessContext = createContext();
 export const useBusiness = () => useContext(BusinessContext);
 
 export const BusinessProvider = ({ children, user }) => {
-    const [environment, setEnvironment] = useState(() => localStorage.getItem('app_environment') || 'personal');
+    const [environment, setEnvironment] = useState(() => sessionStorage.getItem('app_environment') || 'personal');
     const [activeBusiness, setActiveBusiness] = useState(() => {
-        const saved = localStorage.getItem('active_business');
+        const saved = sessionStorage.getItem('active_business');
         return saved ? JSON.parse(saved) : null;
     });
     const [userBusinesses, setUserBusinesses] = useState([]);
@@ -17,15 +17,15 @@ export const BusinessProvider = ({ children, user }) => {
 
     // Persist environment
     useEffect(() => {
-        localStorage.setItem('app_environment', environment);
+        sessionStorage.setItem('app_environment', environment);
     }, [environment]);
 
     // Persist activeBusiness
     useEffect(() => {
         if (activeBusiness) {
-            localStorage.setItem('active_business', JSON.stringify(activeBusiness));
+            sessionStorage.setItem('active_business', JSON.stringify(activeBusiness));
         } else {
-            localStorage.removeItem('active_business');
+            sessionStorage.removeItem('active_business');
         }
     }, [activeBusiness]);
 
@@ -56,7 +56,7 @@ export const BusinessProvider = ({ children, user }) => {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (token && user) {
             fetchUserBusinesses();
         } else if (!user) {
