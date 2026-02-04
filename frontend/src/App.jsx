@@ -31,17 +31,27 @@ export default function App() {
   const hideLayout = location.pathname === "/auth";
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser)); // transforma o JSON em objeto
+    if (location.pathname === "/auth") {
+      // 🔄 Reset Zone: Clear everything when on the auth page
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("active_business");
+      setUser(null);
+    } else {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      } else {
+        setUser(null);
+      }
     }
-  }, [])
+  }, [location.pathname]);
 
 
   return (
 
 
-    <BusinessProvider>
+    <BusinessProvider user={user}>
       <div className="min-h-screen bg-[#f0eee6] text-[#262625] font-sans flex flex-col">
         {/* NAVBAR */}
         {!hideLayout && <Navbar user={user} bgImage={bgImage} logo={logo} />}

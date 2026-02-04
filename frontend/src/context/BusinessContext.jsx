@@ -6,7 +6,7 @@ const BusinessContext = createContext();
 
 export const useBusiness = () => useContext(BusinessContext);
 
-export const BusinessProvider = ({ children }) => {
+export const BusinessProvider = ({ children, user }) => {
     const [environment, setEnvironment] = useState(() => localStorage.getItem('app_environment') || 'personal');
     const [activeBusiness, setActiveBusiness] = useState(() => {
         const saved = localStorage.getItem('active_business');
@@ -56,13 +56,15 @@ export const BusinessProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        // Fetch businesses when app starts or authentication state changes
-        // verify if user is logged in before fetching
         const token = localStorage.getItem('token');
-        if (token) {
+        if (token && user) {
             fetchUserBusinesses();
+        } else if (!user) {
+            // 🔄 Reset internal state when user is cleared
+            setEnvironment('personal');
+            setActiveBusiness(null);
         }
-    }, []);
+    }, [user]);
 
     return (
         <BusinessContext.Provider
