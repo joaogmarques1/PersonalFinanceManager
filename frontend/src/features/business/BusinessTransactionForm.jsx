@@ -49,40 +49,40 @@ export default function BusinessTransactionForm({ onSubmit, onCancel }) {
     // Calculations Effect
     useEffect(() => {
         const net = parseFloat(formData.net_amount) || 0;
-        const vatAmount = parseFloat(formData.VAT_amount) || 0;
+        const vatAmount = parseFloat(formData.vat_amount) || 0;
 
-        if (formData.VAT_exemption && formData.type === 'income') {
+        if (formData.vat_exemption && formData.type === 'income') {
             // Exemption: VAT is 0, Gross = Net
             setFormData(prev => {
-                if (prev.gross_amount === net && prev.VAT_amount === 0 && prev.VAT_rate === 0) return prev;
+                if (prev.gross_amount === net && prev.vat_amount === 0 && prev.vat_rate === 0) return prev;
                 return {
                     ...prev,
-                    VAT_amount: 0,
+                    vat_amount: 0,
                     gross_amount: net,
-                    VAT_rate: 0
+                    vat_rate: 0
                 }
             });
         } else {
-            // Standard: Gross = Net + VAT
+            // Standard: Gross = Net + vatAmount
             const gross = net + vatAmount;
 
-            // Rate = (VAT / Net) * 100
+            // Rate = (vatAmount / Net) * 100
             let rate = 0;
             if (net > 0 && vatAmount > 0) {
                 rate = Math.round((vatAmount / net) * 100);
             }
 
             setFormData(prev => {
-                if (prev.gross_amount === gross && prev.VAT_rate === rate) return prev;
+                if (prev.gross_amount === gross && prev.vat_rate === rate) return prev;
                 return {
                     ...prev,
                     gross_amount: parseFloat(gross.toFixed(2)),
-                    VAT_rate: rate
+                    vat_rate: rate
                 };
             });
         }
 
-    }, [formData.net_amount, formData.VAT_amount, formData.VAT_exemption, formData.type]);
+    }, [formData.net_amount, formData.vat_amount, formData.vat_exemption, formData.type]);
 
 
     const handleChange = (e) => {
@@ -112,8 +112,8 @@ export default function BusinessTransactionForm({ onSubmit, onCancel }) {
             // Gross is calculated, but just to be safe we use the state value
             gross_amount: parseFloat(formData.gross_amount),
             net_amount: parseFloat(formData.net_amount),
-            VAT_amount: parseFloat(formData.VAT_amount) || 0,
-            VAT_rate: parseFloat(formData.VAT_rate),
+            vat_amount: parseFloat(formData.vat_amount) || 0,
+            vat_rate: parseFloat(formData.vat_rate),
             withholding_tax_amount: parseFloat(formData.withholding_tax_amount) || 0,
             category_id: formData.category_id ? Number(formData.category_id) : null,
             currency: "EUR"
@@ -235,14 +235,14 @@ export default function BusinessTransactionForm({ onSubmit, onCancel }) {
                                 <label className="block text-xs font-medium text-gray-500 uppercase mb-1">Valor IVA</label>
                                 <div className="relative">
                                     <input
-                                        name="VAT_amount"
+                                        name="vat_amount"
                                         type="number"
                                         step="0.01"
                                         placeholder="0.00"
-                                        value={formData.VAT_amount}
+                                        value={formData.vat_amount}
                                         onChange={handleChange}
-                                        disabled={formData.VAT_exemption && formData.type === 'income'}
-                                        required={!(formData.VAT_exemption && formData.type === 'income')}
+                                        disabled={formData.vat_exemption && formData.type === 'income'}
+                                        required={!(formData.vat_exemption && formData.type === 'income')}
                                         className="w-full border-2 border-[#d9a553]/50 rounded-lg px-3 py-2 text-lg font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#CC785C]/40 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200"
                                     />
                                     <span className="absolute right-3 top-2.5 text-gray-400 font-medium text-sm">€</span>
@@ -255,8 +255,8 @@ export default function BusinessTransactionForm({ onSubmit, onCancel }) {
                                     <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-600">
                                         <input
                                             type="checkbox"
-                                            name="VAT_exemption"
-                                            checked={formData.VAT_exemption}
+                                            name="vat_exemption"
+                                            checked={formData.vat_exemption}
                                             onChange={handleChange}
                                             className="w-4 h-4 text-[#CC785C] rounded border-gray-300 focus:ring-[#CC785C]"
                                         />
@@ -273,7 +273,7 @@ export default function BusinessTransactionForm({ onSubmit, onCancel }) {
                             <span>Valor Total (Bruto):</span> <span className="font-medium text-gray-700">{Number(formData.gross_amount).toFixed(2)} €</span>
                         </div>
                         <div className="flex-1 border-l border-gray-200 pl-4">
-                            <span>Taxa IVA (Calc):</span> <span className="font-medium text-gray-700">{formData.VAT_rate}%</span>
+                            <span>Taxa IVA (Calc):</span> <span className="font-medium text-gray-700">{formData.vat_rate}%</span>
                         </div>
                     </div>
 

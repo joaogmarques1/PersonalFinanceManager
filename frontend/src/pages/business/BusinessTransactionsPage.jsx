@@ -38,7 +38,7 @@ const MobileBusinessTransactionCard = ({ transaction, onDelete }) => {
                     </span>
                     {!isExpanded && (
                         <span className="text-xs text-gray-400">
-                            {transaction.date} • {transaction.category?.category || "No Category"}
+                            {transaction.date} • {transaction.category?.name || "No Category"}
                         </span>
                     )}
                 </div>
@@ -197,7 +197,7 @@ export default function BusinessTransactionsPage() {
                                 },
                                 { headerName: "VAT", field: "vat_amount", flex: 1, cellRenderer: p => `${Number(p.value).toFixed(2)}` },
                                 { headerName: "Valor Líquido", field: "net_amount", flex: 1, cellRenderer: p => `${Number(p.value).toFixed(2)}` },
-                                { headerName: "Categoria", field: "category.category", flex: 1 },
+                                { headerName: "Categoria", field: "category.name", flex: 1 },
                                 {
                                     headerName: "Ações",
                                     field: "id",
